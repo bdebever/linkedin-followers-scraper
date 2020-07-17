@@ -1,0 +1,16 @@
+{
+  "name": "fetcher-li",
+  "version": "1.0.0",
+  "description": "``",
+  "main": "fetcher.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fast-csv": "^4.3.1",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.8"
+  }
+}
