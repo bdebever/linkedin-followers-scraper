@@ -6,8 +6,11 @@ const fastcsv = require('fast-csv');
 const ws = fs.createWriteStream('followers.csv');
 const ROOT_URL = 'https://www.linkedin.com/voyager/api/voyagerOrganizationDashFollowers?decorationId=com.linkedin.voyager.dash.deco.organization.FullFollowers-1&q=organization';
 
-// TODO: change this to get dynamic COUNT_FOLLOWERS of followers
 const COUNT_FOLLOWERS = 100;
+
+// Complete those variables
+const TOTAL_PAGE_FOLLOWERS=1000;
+const ORGA_ID = '';
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -76,7 +79,7 @@ const saveToCsv = (data) => {
 }
 
 
-main()
+main(ORGA_ID, TOTAL_PAGE_FOLLOWERS)
     .then(value => {
         const data = saveToCsv(value);
     })
