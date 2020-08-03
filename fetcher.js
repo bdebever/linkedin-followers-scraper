@@ -1,40 +1,53 @@
 'use strict';
 
+require('dotenv').config();
 const request = require('request-promise-native');
 const fs = require('fs');
 const fastcsv = require('fast-csv');
 const ws = fs.createWriteStream('followers.csv');
 const ROOT_URL = 'https://www.linkedin.com/voyager/api/voyagerOrganizationDashFollowers?decorationId=com.linkedin.voyager.dash.deco.organization.FullFollowers-1&q=organization';
 
-const COUNT_FOLLOWERS = 100;
+const BATCH = 100;
 
-// Complete those variables
-const TOTAL_PAGE_FOLLOWERS=1000;
-const ORGA_ID = '';
+// Complete those variables into an .env file
+const { TOTAL_PAGE_FOLLOWERS, ORGA_ID, COOKIES, CSRF_TOKEN } = process.env;
 
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (s) => new Promise(resolve => setTimeout(resolve, s*1000));
 
 const main = async (organizationId, total) => {
 
     let results = [];
+    let moreFollowers = true;
+    let index = 0;
 
-    for (let index = 0; index <= parseInt(total/COUNT_FOLLOWERS); index++) {
+    while (moreFollowers) {
 
-    	console.log(index);
+        console.log(index);
+        let currentIndex = index * BATCH;
 
-        let { data, included } = await callApi(organizationId, index * COUNT_FOLLOWERS);
+        let { data: { paging }, included } = await callApi(organizationId, currentIndex)
+
+        console.log(`Got ${included.length} profiles`)
 
         // Improve data part
-        results = [...results, ...included.filter(item=>item.firstName).map(item => ({
+        results = [...results, ...included.filter(item => item.firstName).map(item => ({
         	profileUrl: formatProfileUrl(item.entityUrn),
         	firstName: item.firstName || '',
         	lastName: item.lastName || '',
         	headline: item.headline || ''
         }))];
 
-        sleep(5000);
+        console.log(`We currently have ${results.length} profiles collected`)
+
+        moreFollowers = (paging && paging.total >= currentIndex)
+
+        // Random number between 2 and 8
+        sleep((Math.floor(Math.random() * 7)) + 2);
+        index++;
 
     }
+
+    console.log(`Finished collecting ${results.length} followers`)
 
     return results;
 
@@ -48,13 +61,13 @@ const callApi = async (organizationId, start) => {
 
     const options = {
         method: 'GET',
-        uri: `${ROOT_URL}&organization=urn%3Ali%3Afsd_company%3A${organizationId}&start=${start}&count=${COUNT_FOLLOWERS}`,
+        uri: `${ROOT_URL}&organization=urn%3Ali%3Afsd_company%3A${organizationId}&start=${start}&count=${BATCH}`,
         headers: {
             'authority': 'www.linkedin.com',
             'accept': 'application/vnd.linkedin.normalized+json+2.1',
-            'csrf-token': '',
+            'csrf-token': CSRF_TOKEN,
             'sec-fetch-site': 'same-origin',
-            'cookie': ''
+            'cookie': COOKIES
 
         },
         json: true
