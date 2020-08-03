@@ -9,3 +9,4 @@ followers.csv
 results.json
 
 .env
+.DS_Store
