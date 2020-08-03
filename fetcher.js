@@ -42,7 +42,7 @@ const main = async (organizationId, total) => {
         moreFollowers = (paging && paging.total >= currentIndex)
 
         // Random number between 2 and 8
-        sleep((Math.floor(Math.random() * 7)) + 2);
+        await sleep((Math.floor(Math.random() * 7)) + 2);
         index++;
 
     }
