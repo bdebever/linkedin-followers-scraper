@@ -13,4 +13,8 @@ _How to use_
 - TOTAL_PAGE_FOLLOWERS
 - CSRF token & cookie which you get by inspecting the request LinkedIn does (Network tab)
 
+4. Run `npm run start` and wait for the magic to happen!
+
+PS: Make sure to have `npm` and `Node` installed.
+
 ![Image](https://github.com/bdebever/linkedin-followers-scraper/blob/master/public/screenshot-network-tab.png)

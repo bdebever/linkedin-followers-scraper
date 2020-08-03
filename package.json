@@ -1,12 +1,13 @@
 {
   "name": "fetcher-li",
-  "version": "1.0.0",
-  "description": "``",
+  "version": "1.0.1",
+  "description": "Collect the followers of a LinkedIn company page",
   "main": "fetcher.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node fetcher.js"
   },
-  "author": "",
+  "author": "@bdebever",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
