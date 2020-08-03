@@ -13,4 +13,4 @@ _How to use_
 - TOTAL_PAGE_FOLLOWERS
 - CSRF token & cookie which you get by inspecting the request LinkedIn does (Network tab)
 
-![Image](https://share.getcloudapp.com/4gujqmG5)
+![Image](https://github.com/bdebever/linkedin-followers-scraper/blob/master/public/screenshot-network-tab.png)
